@@ -93,7 +93,10 @@ void MainFrame::Delete(wxCommandEvent& e)
 	m_pDelete->Disable();
 	this->RestackIndices();
 	if (m_pListOfFrames->GetItemCount() == 0)
+	{
 		m_pClear->Disable();
+		m_pCompile->Disable();
+	}
 	else
 		m_pCompile->Enable();
 }
