@@ -11,6 +11,9 @@ public:
 
 	/*
 	resolution for frames
+
+	decreasing this value will increase the file size
+	and increase the fidelity of the animation
 	*/
-	static const uint8_t FRAMES_RESOLUTION = 25;
+	static const uint8_t FRAMES_RESOLUTION = 100;
 };
