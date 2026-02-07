@@ -181,7 +181,7 @@ void MainFrame::Compile(wxCommandEvent& e)
 			}
 
 			/*
-			clamp image data the gif palette colour space
+			clamp image data to the gif palette colour space
 			*/
 			wxImage ib;
 			wxQuantize::Quantize(frame, ib, 256);
