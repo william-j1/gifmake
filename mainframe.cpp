@@ -209,7 +209,7 @@ void MainFrame::Compile(wxCommandEvent& e)
 			wxFileOutputStream outputStream(p);
 			wxGIFHandler* gh = new wxGIFHandler();
 			if ( !gh->SaveAnimation(frames, &outputStream, false, 25) )
-				wxMessageBox("The gif could not be saved", "Save Error", wxOK | wxICON_INFORMATION);
+				wxMessageBox("The gif could not be saved", "Save Error", wxOK | wxICON_ERROR);
 			outputStream.Close();
 		}
 	}
