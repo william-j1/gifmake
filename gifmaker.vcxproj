@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="app.h" />
+    <ClInclude Include="gifmake.h" />
     <ClInclude Include="mainframe.h" />
   </ItemGroup>
   <ItemGroup>

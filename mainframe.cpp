@@ -15,7 +15,7 @@ MainFrame::MainFrame(const wxString& title) :
 	wxMenu* pFileAbout = new wxMenu();
 
 	pFileMenu->Append(wxID_OPEN, "Frames...\tCtrl+O", "Select frame(s)...");
-	pFileMenu->Append(MainFrame::_ID_SET_DURAS, "Set Durations\tCtrl+D", "Set durations for frames...");
+	pFileMenu->Append(Gifmake::MENU_ID_SET_DURAS, "Set Durations\tCtrl+D", "Set durations for frames...");
 	pFileMenu->Append(wxID_EXIT, "E&xit\tCtrl-C", "Exit");
 	pFileAbout->Append(wxID_ABOUT, "About", "About");
 	pMenuBar->Append(pFileMenu, "&File");
@@ -25,7 +25,7 @@ MainFrame::MainFrame(const wxString& title) :
 	Bind(wxEVT_MENU, &MainFrame::OnAbout, this, wxID_ABOUT);
 	Bind(wxEVT_MENU, &MainFrame::OnExit, this, wxID_EXIT);
 	Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
-	Bind(wxEVT_MENU, &MainFrame::OnSetDura, this, MainFrame::_ID_SET_DURAS);
+	Bind(wxEVT_MENU, &MainFrame::OnSetDura, this, Gifmake::MENU_ID_SET_DURAS);
 
 	wxPanel* pListPanel = new wxPanel(this);
 	m_pListOfFrames = new wxListCtrl(
@@ -63,9 +63,11 @@ MainFrame::MainFrame(const wxString& title) :
 
 void MainFrame::OnSetDura(wxCommandEvent& e)
 {
+	if (m_pListOfFrames->GetItemCount() == 0)
+		return;
 	wxTextEntryDialog prompt(
 		this,
-		"Set in seconds (1dp):",
+		"Set in seconds (2dp):",
 		"Set Durations",
 		"1.0"
 	);
@@ -74,10 +76,10 @@ void MainFrame::OnSetDura(wxCommandEvent& e)
 		double v;
 		if (!prompt.GetValue().ToDouble(&v))
 			return;
-		if (v <= 0.025)
+		if (v <= static_cast<double>(Gifmake::FRAMES_RESOLUTION) / 1000.0)
 			return;
 		for (uint64_t y = 0; y < m_pListOfFrames->GetItemCount(); y++)
-			m_pListOfFrames->SetItem(y, 1, wxString::Format("%.1f", v));
+			m_pListOfFrames->SetItem(y, 1, wxString::Format("%.2f", v));
 	}
 }
 
@@ -217,7 +219,7 @@ void MainFrame::Compile(wxCommandEvent& e)
 			/*
 			stack frame counts relative to a 25ms resolution
 			*/
-			fps = (dura * 1000) / 25;
+			fps = static_cast<uint32_t>((dura*1000.0)/static_cast<double>(Gifmake::FRAMES_RESOLUTION));
 			for ( uint32_t k = 0; k < fps; k++ )
 				frames.push_back(ib);
 			duras.push_back(dura);
@@ -230,7 +232,7 @@ void MainFrame::Compile(wxCommandEvent& e)
 		{
 			wxFileOutputStream outputStream(p);
 			wxGIFHandler* gh = new wxGIFHandler();
-			if ( !gh->SaveAnimation(frames, &outputStream, false, 25) )
+			if ( !gh->SaveAnimation(frames, &outputStream, false, Gifmake::FRAMES_RESOLUTION) )
 				wxMessageBox("The gif could not be saved", "Save Error", wxOK | wxICON_ERROR);
 			outputStream.Close();
 		}
@@ -252,7 +254,7 @@ void MainFrame::OnRowDoubleClicked(wxListEvent& e) {
 	uint64_t y = e.GetIndex();
 	wxTextEntryDialog prompt(
 		this, 
-		"Set in seconds (1dp):", 
+		"Set in seconds (2dp):", 
 		"Set Duration", 
 		m_pListOfFrames->GetItemText(y, 1)
 	);
@@ -261,9 +263,9 @@ void MainFrame::OnRowDoubleClicked(wxListEvent& e) {
 		double v;
 		if (!prompt.GetValue().ToDouble(&v))
 			return;
-		if (v <= 0.025)
+		if (v <= static_cast<double>(Gifmake::FRAMES_RESOLUTION) / 1000.0)
 			return;
-		m_pListOfFrames->SetItem(y, 1, wxString::Format("%.1f", v));
+		m_pListOfFrames->SetItem(y, 1, wxString::Format("%.2f", v));
 	}
 }
 

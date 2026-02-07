@@ -10,14 +10,11 @@
 #include <wx/quantize.h>
 #include <wx/utils.h>
 #include <vector>
+#include "gifmake.h";
 
 class MainFrame : public wxFrame
 {
 public:
-	/*
-	bin id for OnSetDura
-	*/
-	static const uint8_t _ID_SET_DURAS = 0x00;
 
 	MainFrame(const wxString& title);
 
