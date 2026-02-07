@@ -272,7 +272,7 @@ void MainFrame::OnOpen(wxCommandEvent& e) {
 		{
 			uint64_t c = m_pListOfFrames->GetItemCount();
 			uint64_t y = m_pListOfFrames->InsertItem(c, wxString::Format("%llu", c+1));
-			m_pListOfFrames->SetItem(y, 1, "1");
+			m_pListOfFrames->SetItem(y, 1, "1.0");
 			m_pListOfFrames->SetItem(y, 2, p);
 		}
 		if (m_pListOfFrames->GetItemCount() != 0)
