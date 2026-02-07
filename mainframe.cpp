@@ -74,7 +74,7 @@ void MainFrame::OnSetDura(wxCommandEvent& e)
 		double v;
 		if (!prompt.GetValue().ToDouble(&v))
 			return;
-		if (v <= 0)
+		if (v <= 0.025)
 			return;
 		for (uint64_t y = 0; y < m_pListOfFrames->GetItemCount(); y++)
 			m_pListOfFrames->SetItem(y, 1, wxString::Format("%.1f", v));
@@ -261,7 +261,7 @@ void MainFrame::OnRowDoubleClicked(wxListEvent& e) {
 		double v;
 		if (!prompt.GetValue().ToDouble(&v))
 			return;
-		if (v <= 0)
+		if (v <= 0.025)
 			return;
 		m_pListOfFrames->SetItem(y, 1, wxString::Format("%.1f", v));
 	}
