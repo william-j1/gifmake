@@ -14,6 +14,11 @@
 class MainFrame : public wxFrame
 {
 public:
+	/*
+	bin id for OnSetDura
+	*/
+	static const uint8_t _ID_SET_DURAS = 0x00;
+
 	MainFrame(const wxString& title);
 
 private:
@@ -29,6 +34,7 @@ private:
 	void OnOpen(wxCommandEvent& e);
 	void OnRowDoubleClicked(wxListEvent& e);
 	void OnRowSelected(wxListEvent& e);
+	void OnSetDura(wxCommandEvent& e);
 	void MoveItemUp(wxCommandEvent& e);
 	void MoveItemDown(wxCommandEvent& e);
 	void Compile(wxCommandEvent& e);

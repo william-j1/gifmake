@@ -15,6 +15,7 @@ MainFrame::MainFrame(const wxString& title) :
 	wxMenu* pFileAbout = new wxMenu();
 
 	pFileMenu->Append(wxID_OPEN, "Frames...\tCtrl+O", "Select frame(s)...");
+	pFileMenu->Append(MainFrame::_ID_SET_DURAS, "Set Durations\tCtrl+D", "Set durations for frames...");
 	pFileMenu->Append(wxID_EXIT, "E&xit\tCtrl-C", "Exit");
 	pFileAbout->Append(wxID_ABOUT, "About", "About");
 	pMenuBar->Append(pFileMenu, "&File");
@@ -24,6 +25,7 @@ MainFrame::MainFrame(const wxString& title) :
 	Bind(wxEVT_MENU, &MainFrame::OnAbout, this, wxID_ABOUT);
 	Bind(wxEVT_MENU, &MainFrame::OnExit, this, wxID_EXIT);
 	Bind(wxEVT_MENU, &MainFrame::OnOpen, this, wxID_OPEN);
+	Bind(wxEVT_MENU, &MainFrame::OnSetDura, this, MainFrame::_ID_SET_DURAS);
 
 	wxPanel* pListPanel = new wxPanel(this);
 	m_pListOfFrames = new wxListCtrl(
@@ -57,6 +59,26 @@ MainFrame::MainFrame(const wxString& title) :
 	m_pMoveUp->Bind(wxEVT_BUTTON, &MainFrame::MoveItemUp, this);
 	m_pMoveDown->Bind(wxEVT_BUTTON, &MainFrame::MoveItemDown, this);
 	m_pCompile->Bind(wxEVT_BUTTON, &MainFrame::Compile, this);
+}
+
+void MainFrame::OnSetDura(wxCommandEvent& e)
+{
+	wxTextEntryDialog prompt(
+		this,
+		"Set in seconds (1dp):",
+		"Set Durations",
+		"1.0"
+	);
+	if (prompt.ShowModal() == wxID_OK)
+	{
+		double v;
+		if (!prompt.GetValue().ToDouble(&v))
+			return;
+		if (v == 0)
+			return;
+		for (uint64_t y = 0; y < m_pListOfFrames->GetItemCount(); y++)
+			m_pListOfFrames->SetItem(y, 1, wxString::Format("%.1f", v));
+	}
 }
 
 void MainFrame::OnRowSelected(wxListEvent& e)
