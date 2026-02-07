@@ -89,11 +89,13 @@ void MainFrame::Delete(wxCommandEvent& e)
 	m_pListOfFrames->DeleteItem(y);
 	m_pMoveDown->Disable();
 	m_pMoveUp->Disable();
-	if (m_pListOfFrames->GetItemCount() == 0) {
-		m_pClear->Disable();
-		m_pView->Disable();
-	}
+	m_pView->Disable();
+	m_pDelete->Disable();
 	this->RestackIndices();
+	if (m_pListOfFrames->GetItemCount() == 0)
+		m_pClear->Disable();
+	else
+		m_pCompile->Enable();
 }
 
 void MainFrame::MoveItemUp(wxCommandEvent& e)
