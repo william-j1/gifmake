@@ -217,7 +217,7 @@ void MainFrame::Compile(wxCommandEvent& e)
 			wxQuantize::Quantize(frame, ib, 256);
 
 			/*
-			stack frame counts relative to a 25ms resolution
+			stack frame counts relative to a set resolution
 			*/
 			fps = static_cast<uint32_t>((dura*1000.0)/static_cast<double>(Gifmake::FRAMES_RESOLUTION));
 			for ( uint32_t k = 0; k < fps; k++ )
