@@ -8,7 +8,7 @@ Gifmake is a simple software program which can preload a set of image frames, al
 Why?
 ====
 
-Quick google search produced a magnitude of online web tools which permit the creation of gif images albeit overly complex and don't allow the careful modification of frame duration nor the simple use case of a simple load and compile.
+Quick web search produced a magnitude of online web tools which permit the creation of gif images albeit overly complex and don't allow the careful modification of frame duration nor the simple use case of a simple load and compile.
 
 License
 =======
