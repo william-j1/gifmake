@@ -36,4 +36,5 @@ private:
 	void Delete(wxCommandEvent& e);
 	void View(wxCommandEvent& e);
 	void SwapRows(uint64_t p, uint64_t q);
+	void RestackIndices();
 };

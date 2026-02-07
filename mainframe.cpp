@@ -84,15 +84,16 @@ void MainFrame::View(wxCommandEvent& e)
 void MainFrame::Delete(wxCommandEvent& e)
 {
 	uint64_t y = m_pListOfFrames->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-	if (y != -1)
-		m_pListOfFrames->DeleteItem(y);
+	if (y == -1)
+		return;
+	m_pListOfFrames->DeleteItem(y);
 	m_pMoveDown->Disable();
 	m_pMoveUp->Disable();
-	if (m_pListOfFrames->GetItemCount() == 0)
-	{
+	if (m_pListOfFrames->GetItemCount() == 0) {
 		m_pClear->Disable();
 		m_pView->Disable();
 	}
+	this->RestackIndices();
 }
 
 void MainFrame::MoveItemUp(wxCommandEvent& e)
@@ -288,4 +289,10 @@ void MainFrame::SwapRows(uint64_t p, uint64_t q)
 	m_pListOfFrames->SetItem(q, 1, q1);
 	m_pListOfFrames->SetItem(q, 2, w1);
 	m_pListOfFrames->SetItemState(q, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+}
+
+void MainFrame::RestackIndices()
+{
+	for (uint64_t y = 0; y < m_pListOfFrames->GetItemCount(); y++)
+		m_pListOfFrames->SetItem(y, 0, wxString::Format("%llu", y + 1));
 }

@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="gifmaker.vcxproj" />
+  <Project Path="gifmaker.vcxproj" Id="bdaf951d-58e8-45df-aa06-f532c54bddbb" />
 </Solution>
